@@ -302,8 +302,8 @@ const S = [
 const ICON = {corte:"#scissors",color:"#brush",trat:"#sparkle",even:"#mirror"};
 const OPEN = {2:["9:30","10:30","11:30","12:30","16:00","17:00","18:00","18:30"],3:0,4:0,5:0,6:["9:00","10:00","11:00","12:00"]};
 let lang = "es", sel = new Set(), cur = "corte", day = null, slot = null;
-/* Horas ocupadas: agenda de Jennifer (Apps Script), solo fecha, hora y duración */
-const API = "";
+/* Horas ocupadas: las tacha Jennifer con su herramienta (horas.json en este repositorio) */
+const HORAS = "https://api.github.com/repos/escaparatedigital/escaparatedigital/contents/clientes/pelu-jennifer/horas.json?ref=main";
 let BUSY = {};
 const dk = (d) => `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
 const toMin = (h) => { const [a,b] = h.split(":").map(Number); return a*60 + (b||0); };
@@ -311,21 +311,22 @@ const openDay = (d) => { const w = d.getDay(); return w >= 2 && w <= 6 && BUSY[d
 const selDur = () => Math.max(30, [...sel].reduce((a,i) => a + S[i].t, 0));
 const taken = (h) => { const b = BUSY[dk(new Date(day))]; if (!Array.isArray(b)) return false; const s = toMin(h), e = s + selDur(); return b.some(([x,y]) => s < y && e > x); };
 async function loadBusy(){
-  if (!API) return;
-  try {
-    const list = await (await fetch(API + "?action=busy&t=" + Date.now())).json();
-    const B = {};
-    list.forEach(({f, h, d}) => {
-      const r = String(f).match(/^(\d{4})-(\d{1,2})-(\d{1,2})/); if (!r) return;
-      const k = `${+r[1]}-${+r[2]}-${+r[3]}`;
-      if (!/^\d{1,2}:\d{2}/.test(h || "")) { B[k] = "all"; return; }
-      if (B[k] === "all") return;
-      const s = toMin(h); (B[k] = B[k] || []).push([s, s + (+d || 30)]);
-    });
-    BUSY = B;
-    if (day && !openDay(new Date(day))) day = null;
-    render();
-  } catch (e) {}
+  let j = null;
+  try { const r = await fetch(HORAS + "&t=" + Date.now(), {headers:{Accept:"application/vnd.github.raw+json"}, cache:"no-store"}); if (r.ok) j = await r.json(); } catch (e) {}
+  if (!j) { try { const r = await fetch("horas.json?t=" + Date.now(), {cache:"no-store"}); if (r.ok) j = await r.json(); } catch (e) {} }
+  if (!j || !j.ocupado) return;
+  const B = {};
+  Object.entries(j.ocupado).forEach(([f, v]) => {
+    const r = String(f).match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/); if (!r) return;
+    const k = `${+r[1]}-${+r[2]}-${+r[3]}`;
+    if (v === "cerrado") { B[k] = "all"; return; }
+    if (!Array.isArray(v)) return;
+    const w = new Date(+r[1], +r[2]-1, +r[3]).getDay(), list = (w === 6 ? OPEN[6] : OPEN[2]).map(toMin).sort((a,b) => a-b);
+    B[k] = v.map(toMin).map(s => { const n = list.find(x => x > s); return [s, n && n - s <= 60 ? n : s + 60]; });
+  });
+  BUSY = B;
+  if (day && !openDay(new Date(day))) day = null;
+  render();
 }
 const $ = (id) => document.getElementById(id), LI = () => ({es:0,ca:1,en:2})[lang];
 const hm = (m) => m >= 60 ? `${Math.floor(m/60)} h${m%60 ? " " + m%60 + " min" : ""}` : `${m} min`;
