@@ -148,6 +148,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .slot[aria-pressed="true"]{background:var(--cafe);color:var(--paper);border-color:var(--cafe)}
 .slot:active{transform:scale(.97)}
 .slot:disabled{opacity:.3;text-decoration:line-through;cursor:not-allowed}
+.bn{font-size:12.5px;line-height:1.5;color:var(--muted);margin-top:12px}
 
 /* info */
 .info{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -243,6 +244,7 @@ footer .logo{font-size:30px;color:var(--cafe)}
   <div class="book rv">
     <h4 data-t="dayT">Día</h4><div class="days" id="days"></div>
     <div class="slots" id="slots"></div>
+    <p class="bn" data-t="busyN"></p>
   </div>
 
   <div class="sh rv"><h2 data-t="infoT">Dónde <em>estamos</em></h2><span class="n">III</span></div>
@@ -265,19 +267,19 @@ footer .logo{font-size:30px;color:var(--cafe)}
 
 <script>
 const T = {
- es:{wa:["¡Hola Jennifer! Me gustaría pedir cita para:","Día","Hora","a convenir","Total aproximado","¡Gracias!"],k:"Peluquería · Martorell",lead:"Corte, color y peinados con mimo. Elige tus servicios, mira el precio y pide tu cita en un momento.",c1:"Cita en 1 minuto",c2:"Precios claros",
+ es:{busyN:"Las horas tachadas ya están ocupadas. Jennifer te confirmará la cita por WhatsApp.",wa:["¡Hola Jennifer! Me gustaría pedir cita para:","Día","Hora","a convenir","Total aproximado","¡Gracias!"],k:"Peluquería · Martorell",lead:"Corte, color y peinados con mimo. Elige tus servicios, mira el precio y pide tu cita en un momento.",c1:"Cita en 1 minuto",c2:"Precios claros",
   svcT:"Elige tus <em>servicios</em>",whenT:"¿<em>Cuándo</em> te va bien?",dayT:"Día",infoT:"Dónde <em>estamos</em>",hoursT:"Horario",contactT:"Contacto",
   callB:"Llamar",mapB:"Cómo llegar",foot:"Peluquería · Martorell, Barcelona",ask:"Pedir cita",heroB:"Elegir servicios",
   from:"desde",svc1:"servicio",svcN:"servicios",closed:"Cerrado",dn:["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"],
   hours:[["Lun","Cerrado"],["Mar – Vie","9:30 – 19:30"],["Sáb","9:00 – 14:00"],["Dom","Cerrado"]],
   cats:{corte:"Corte y peinado",color:"Color",trat:"Tratamientos",even:"Novias y eventos"}},
- ca:{wa:["Hola Jennifer! Voldria demanar hora per a:","Dia","Hora","a convenir","Total aproximat","Gràcies!"],k:"Perruqueria · Martorell",lead:"Tall, color i pentinats amb cura. Tria els teus serveis, mira el preu i demana hora en un moment.",c1:"Hora en 1 minut",c2:"Preus clars",
+ ca:{busyN:"Les hores ratllades ja estan ocupades. La Jennifer et confirmarà l'hora per WhatsApp.",wa:["Hola Jennifer! Voldria demanar hora per a:","Dia","Hora","a convenir","Total aproximat","Gràcies!"],k:"Perruqueria · Martorell",lead:"Tall, color i pentinats amb cura. Tria els teus serveis, mira el preu i demana hora en un moment.",c1:"Hora en 1 minut",c2:"Preus clars",
   svcT:"Tria els teus <em>serveis</em>",whenT:"<em>Quan</em> et va bé?",dayT:"Dia",infoT:"On <em>som</em>",hoursT:"Horari",contactT:"Contacte",
   callB:"Trucar",mapB:"Com arribar",foot:"Perruqueria · Martorell, Barcelona",ask:"Demanar hora",heroB:"Triar serveis",
   from:"des de",svc1:"servei",svcN:"serveis",closed:"Tancat",dn:["Dg","Dl","Dt","Dc","Dj","Dv","Ds"],
   hours:[["Dl","Tancat"],["Dt – Dv","9:30 – 19:30"],["Ds","9:00 – 14:00"],["Dg","Tancat"]],
   cats:{corte:"Tall i pentinat",color:"Color",trat:"Tractaments",even:"Núvies i esdeveniments"}},
- en:{wa:["Hi Jennifer! I'd like to book:","Day","Time","flexible","Approx. total","Thank you!"],k:"Hair salon · Martorell",lead:"Cuts, colour and styling with care. Choose your services, see the price and book in a moment.",c1:"Book in 1 minute",c2:"Clear prices",
+ en:{busyN:"Crossed-out times are already taken. Jennifer will confirm your booking on WhatsApp.",wa:["Hi Jennifer! I'd like to book:","Day","Time","flexible","Approx. total","Thank you!"],k:"Hair salon · Martorell",lead:"Cuts, colour and styling with care. Choose your services, see the price and book in a moment.",c1:"Book in 1 minute",c2:"Clear prices",
   svcT:"Choose your <em>services</em>",whenT:"<em>When</em> suits you?",dayT:"Day",infoT:"Find <em>us</em>",hoursT:"Opening hours",contactT:"Contact",
   callB:"Call",mapB:"Directions",foot:"Hair salon · Martorell, Barcelona",ask:"Book now",heroB:"Choose services",
   from:"from",svc1:"service",svcN:"services",closed:"Closed",dn:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
@@ -300,6 +302,35 @@ const S = [
 const ICON = {corte:"#scissors",color:"#brush",trat:"#sparkle",even:"#mirror"};
 const OPEN = {2:["9:30","10:30","11:30","12:30","16:00","17:00","18:00","18:30"],3:0,4:0,5:0,6:["9:00","10:00","11:00","12:00"]};
 let lang = "es", sel = new Set(), cur = "corte", day = null, slot = null;
+/* Horas ocupadas: hoja de Google publicada como CSV (columnas Fecha, Hora, Duración) */
+const SHEET = "";
+let BUSY = {};
+const dk = (d) => `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+const toMin = (h) => { const [a,b] = h.split(":").map(Number); return a*60 + (b||0); };
+const openDay = (d) => { const w = d.getDay(); return w >= 2 && w <= 6 && BUSY[dk(d)] !== "all"; };
+const selDur = () => Math.max(30, [...sel].reduce((a,i) => a + S[i].t, 0));
+const taken = (h) => { const b = BUSY[dk(new Date(day))]; if (!Array.isArray(b)) return false; const s = toMin(h), e = s + selDur(); return b.some(([x,y]) => s < y && e > x); };
+async function loadBusy(){
+  if (!SHEET) return;
+  try {
+    const tx = await (await fetch(SHEET + (SHEET.includes("?") ? "&" : "?") + "t=" + Date.now(), {cache:"no-store"})).text();
+    const B = {};
+    tx.split(/\r?\n/).slice(1).forEach(l => {
+      const c = l.split(",").map(s => s.replace(/^"|"$/g, "").trim()); if (!c[0]) return;
+      let y, m, d, r = c[0].match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
+      if (r) { d = +r[1]; m = +r[2]; y = +r[3]; if (y < 100) y += 2000; }
+      else { r = c[0].match(/^(\d{4})-(\d{1,2})-(\d{1,2})/); if (!r) return; y = +r[1]; m = +r[2]; d = +r[3]; }
+      const k = `${y}-${m}-${d}`;
+      if (!/^\d{1,2}[:.]\d{2}/.test(c[1] || "")) { B[k] = "all"; return; }
+      if (B[k] === "all") return;
+      const s = toMin(c[1].replace(".", ":")), du = parseInt(c[2]) || 30;
+      (B[k] = B[k] || []).push([s, s + du]);
+    });
+    BUSY = B;
+    if (day && !openDay(new Date(day))) day = null;
+    render();
+  } catch (e) {}
+}
 const $ = (id) => document.getElementById(id), LI = () => ({es:0,ca:1,en:2})[lang];
 const hm = (m) => m >= 60 ? `${Math.floor(m/60)} h${m%60 ? " " + m%60 + " min" : ""}` : `${m} min`;
 
@@ -315,16 +346,17 @@ function render(){
   const now = new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Madrid"}));
   const days = [];
   for (let k = 0; days.length < 10; k++) { const d = new Date(now); d.setDate(now.getDate() + k); days.push(d); }
-  $("days").innerHTML = days.map(d => { const w = d.getDay(), ok = w >= 2 && w <= 6, key = d.toDateString();
+  $("days").innerHTML = days.map(d => { const w = d.getDay(), ok = openDay(d), key = d.toDateString();
     return `<button class="day" data-k="${key}" ${ok ? "" : "disabled"} aria-pressed="${day===key}"><small>${t.dn[w]}</small><b>${d.getDate()}</b></button>`; }).join("");
-  if (!day) { const f = days.find(d => d.getDay() >= 2 && d.getDay() <= 6); day = f.toDateString(); $("days").querySelector(`[data-k="${day}"]`).setAttribute("aria-pressed","true"); }
+  if (!day) { const f = days.find(openDay); day = f.toDateString(); $("days").querySelector(`[data-k="${day}"]`).setAttribute("aria-pressed","true"); }
   renderSlots(); renderSum(); observe();
 }
 function renderSlots(){
   const w = new Date(day).getDay(), list = w === 6 ? OPEN[6] : OPEN[2];
   const now = new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Madrid"})), isToday = new Date(day).toDateString() === now.toDateString();
   const past = (h) => { const [a,b] = h.split(":").map(Number); return isToday && a*60+b <= now.getHours()*60+now.getMinutes(); };
-  $("slots").innerHTML = list.map(h => `<button class="slot" data-h="${h}" ${past(h) ? "disabled" : ""} aria-pressed="${slot===h}">${h}</button>`).join("");
+  if (slot && (past(slot) || taken(slot))) slot = null;
+  $("slots").innerHTML = list.map(h => `<button class="slot" data-h="${h}" ${past(h) || taken(h) ? "disabled" : ""} aria-pressed="${slot===h}">${h}</button>`).join("");
 }
 function renderSum(){
   const t = T[lang], li = LI(), items = [...sel].map(i => S[i]);
@@ -339,7 +371,7 @@ const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecti
 function observe(){ document.querySelectorAll(".grp").forEach(g => io.observe(g)); }
 document.querySelector(".lang").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; lang = b.dataset.l; document.querySelectorAll(".lang button").forEach(x => x.setAttribute("aria-pressed", x === b)); render(); });
 $("tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (!b) return; cur = b.dataset.c; $("g-" + cur).scrollIntoView({behavior:"smooth"}); });
-$("list").addEventListener("click", e => { const b = e.target.closest(".svc"); if (!b) return; const i = +b.dataset.i; sel.has(i) ? sel.delete(i) : sel.add(i); b.setAttribute("aria-pressed", sel.has(i)); renderSum(); });
+$("list").addEventListener("click", e => { const b = e.target.closest(".svc"); if (!b) return; const i = +b.dataset.i; sel.has(i) ? sel.delete(i) : sel.add(i); b.setAttribute("aria-pressed", sel.has(i)); renderSlots(); renderSum(); });
 $("days").addEventListener("click", e => { const b = e.target.closest(".day"); if (!b || b.disabled) return; day = b.dataset.k; slot = null; $("days").querySelectorAll(".day").forEach(x => x.setAttribute("aria-pressed", x === b)); renderSlots(); renderSum(); });
 $("slots").addEventListener("click", e => { const b = e.target.closest(".slot"); if (!b || b.disabled) return; slot = b.dataset.h; $("slots").querySelectorAll(".slot").forEach(x => x.setAttribute("aria-pressed", x === b)); renderSum(); });
 const rio = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); rio.unobserve(en.target); } }), { threshold: .1 });
@@ -369,6 +401,8 @@ $("ask").addEventListener("click", () => {
   window.open("https://wa.me/34687393966?text=" + encodeURIComponent(lines.join(String.fromCharCode(10))), "_blank", "noopener");
 });
 render();
+loadBusy(); setInterval(loadBusy, 120000);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) loadBusy(); });
 </script>
 </body>
 </html>
