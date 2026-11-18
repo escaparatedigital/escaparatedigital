@@ -71,7 +71,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .svc[aria-pressed="true"]:after{animation:sweep .9s cubic-bezier(.23,1,.32,1)}
 @keyframes sweep{to{transform:translateX(260%)}}
 .svc[aria-pressed="true"] .ck{background:linear-gradient(135deg,#B58650,#E2C38F,#B88B57);border-color:transparent}
-.day[aria-pressed="true"]{background:var(--m-base) center/300%;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+
 .sum button{position:relative;overflow:hidden;background:#EBCBC6 var(--m-base) center/300%;box-shadow:0 0 0 1px var(--gold) inset}
 .sum button:after{content:"";position:absolute;inset:0;width:50%;background:linear-gradient(100deg,transparent,rgba(255,248,230,.85),transparent);transform:translateX(-120%);animation:shine 4s 1s ease-in-out infinite}
 .foot2{margin-top:44px;padding:56px 18px 64px;display:grid;place-items:center}
@@ -135,20 +135,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* booking */
 .book{background:var(--paper);border:1px solid var(--line);border-radius:26px;padding:20px}
 .book h4{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.days{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
-.days::-webkit-scrollbar{display:none}
-.day{flex:none;width:62px;min-height:74px;border-radius:18px;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:background-color .2s ease,transform .16s var(--ease)}
-.day small{font-size:11px;font-weight:800;text-transform:uppercase;color:var(--muted)}
-.day b{font-family:Playfair,serif;font-size:22px}
-.day[aria-pressed="true"]{background:var(--blush);border-color:var(--blush)}
-.day:disabled{opacity:.35;cursor:not-allowed}
-.day:active{transform:scale(.97)}
-.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
-.slot{min-height:44px;border-radius:14px;border:1px solid var(--line);font-weight:700;font-size:14px;transition:background-color .2s ease,color .2s ease,transform .16s var(--ease)}
-.slot[aria-pressed="true"]{background:var(--cafe);color:var(--paper);border-color:var(--cafe)}
-.slot:active{transform:scale(.97)}
-.slot:disabled{opacity:.3;text-decoration:line-through;cursor:not-allowed}
-.bn{font-size:12.5px;line-height:1.5;color:var(--muted);margin-top:12px}
+.book h4:not(:first-child){margin-top:20px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:#fff;font-weight:700;font-size:14px;transition:background-color .2s ease,color .2s ease,border-color .2s ease,transform .16s var(--ease)}
+.opt[aria-pressed="true"]{background:var(--cafe);color:var(--paper);border-color:var(--cafe)}
+.opt:active{transform:scale(.97)}
+.fld{width:100%;min-height:50px;border-radius:14px;border:1px solid var(--line);background:#fff;padding:0 14px;font:inherit;font-size:16px;color:var(--cafe)}
+.fld.date{margin-top:10px;max-width:220px}
+.bn{font-size:13px;line-height:1.5;color:var(--muted);margin-top:16px}
+.btn.wa{width:100%;margin-top:14px;min-height:54px;font-size:15.5px}
 
 /* info */
 .info{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -188,6 +183,7 @@ footer .logo{font-size:30px;color:var(--cafe)}
 @media(min-width:1000px){.side{display:block}}
 
 @media(prefers-reduced-motion:reduce){*{transition:none!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+.hide{display:none!important}
 </style>
 </head>
 <body>
@@ -240,11 +236,17 @@ footer .logo{font-size:30px;color:var(--cafe)}
   <div class="svcwrap"><nav class="tabs" role="tablist" id="tabs"></nav>
   <div id="list"></div></div>
 
-  <div class="sh rv"><h2 data-t="whenT">¿<em>Cuándo</em> te va bien?</h2><span class="n">II</span></div>
+  <div class="sh rv"><h2 data-t="whenT">Propón tu <em>cita</em></h2><span class="n">II</span></div>
   <div class="book rv">
-    <h4 data-t="dayT">Día</h4><div class="days" id="days"></div>
-    <div class="slots" id="slots"></div>
-    <p class="bn" data-t="busyN"></p>
+    <h4 data-t="whenQ">¿Cuándo te viene bien?</h4>
+    <div class="opts" id="when"></div>
+    <input class="fld date hide" id="date" type="date" aria-label="Fecha">
+    <h4 data-t="partQ">¿Mañana o tarde?</h4>
+    <div class="opts" id="part"></div>
+    <h4 data-t="nameQ">Tu nombre</h4>
+    <input class="fld" id="name" type="text" autocomplete="given-name" autocapitalize="words" data-ph="namePh">
+    <p class="bn" data-t="note">Jennifer te contestará por WhatsApp con el primer hueco que encaje para cerrar la cita.</p>
+    <button class="btn d wa" id="ask2"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg><span data-t="askB">Consultar disponibilidad</span></button>
   </div>
 
   <div class="sh rv"><h2 data-t="infoT">Dónde <em>estamos</em></h2><span class="n">III</span></div>
@@ -267,21 +269,21 @@ footer .logo{font-size:30px;color:var(--cafe)}
 
 <script>
 const T = {
- es:{busyN:"Las horas tachadas ya están ocupadas. Jennifer te confirmará la cita por WhatsApp.",wa:["¡Hola Jennifer! Me gustaría pedir cita para:","Día","Hora","a convenir","Total aproximado","¡Gracias!"],k:"Peluquería · Martorell",lead:"Corte, color y peinados con mimo. Elige tus servicios, mira el precio y pide tu cita en un momento.",c1:"Cita en 1 minuto",c2:"Precios claros",
-  svcT:"Elige tus <em>servicios</em>",whenT:"¿<em>Cuándo</em> te va bien?",dayT:"Día",infoT:"Dónde <em>estamos</em>",hoursT:"Horario",contactT:"Contacto",
-  callB:"Llamar",mapB:"Cómo llegar",foot:"Peluquería · Martorell, Barcelona",ask:"Pedir cita",heroB:"Elegir servicios",
+ es:{whenQ:"¿Cuándo te viene bien?",partQ:"¿Mañana o tarde?",nameQ:"Tu nombre",namePh:"Ej.: Laura",note:"Jennifer te contestará por WhatsApp con el primer hueco que encaje para cerrar la cita.",askB:"Consultar disponibilidad",W:["Lo antes posible", "Esta semana", "La semana que viene", "Un día concreto"],P:["Mañana", "Tarde", "Me da igual"],m:{"hi": "¡Hola Jennifer! 👋💇‍♀️", "want": "Me gustaría pedir cita para:", "none": "Me gustaría pedir una cita.", "tot": "💶 Total aproximado", "pref": "📅 Preferencia", "name": "🙋‍♀️ Nombre", "q": "¿Tienes disponibilidad? ¡Muchas gracias! ✨", "asap": ["la primera mañana disponible", "la primera tarde disponible", "el primer hueco disponible"], "wk": "esta semana", "nx": "la semana que viene", "on": "el", "pt": [", por la mañana", ", por la tarde", ", a cualquier hora"]},k:"Peluquería · Martorell",lead:"Corte, color y peinados con mimo. Elige tus servicios, mira el precio y pide tu cita en un momento.",c1:"Cita en 1 minuto",c2:"Precios claros",
+  svcT:"Elige tus <em>servicios</em>",whenT:"Propón tu <em>cita</em>",infoT:"Dónde <em>estamos</em>",hoursT:"Horario",contactT:"Contacto",
+  callB:"Llamar",mapB:"Cómo llegar",foot:"Peluquería · Martorell, Barcelona",ask:"Consultar",heroB:"Elegir servicios",
   from:"desde",svc1:"servicio",svcN:"servicios",closed:"Cerrado",dn:["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"],
   hours:[["Lun","Cerrado"],["Mar – Vie","9:30 – 19:30"],["Sáb","9:00 – 14:00"],["Dom","Cerrado"]],
   cats:{corte:"Corte y peinado",color:"Color",trat:"Tratamientos",even:"Novias y eventos"}},
- ca:{busyN:"Les hores ratllades ja estan ocupades. La Jennifer et confirmarà l'hora per WhatsApp.",wa:["Hola Jennifer! Voldria demanar hora per a:","Dia","Hora","a convenir","Total aproximat","Gràcies!"],k:"Perruqueria · Martorell",lead:"Tall, color i pentinats amb cura. Tria els teus serveis, mira el preu i demana hora en un moment.",c1:"Hora en 1 minut",c2:"Preus clars",
-  svcT:"Tria els teus <em>serveis</em>",whenT:"<em>Quan</em> et va bé?",dayT:"Dia",infoT:"On <em>som</em>",hoursT:"Horari",contactT:"Contacte",
-  callB:"Trucar",mapB:"Com arribar",foot:"Perruqueria · Martorell, Barcelona",ask:"Demanar hora",heroB:"Triar serveis",
+ ca:{whenQ:"Quan et va bé?",partQ:"Matí o tarda?",nameQ:"El teu nom",namePh:"Ex.: Laura",note:"La Jennifer et respondrà per WhatsApp amb el primer forat que encaixi per tancar l'hora.",askB:"Consultar disponibilitat",W:["Com més aviat millor", "Aquesta setmana", "La setmana que ve", "Un dia concret"],P:["Matí", "Tarda", "M'és igual"],m:{"hi": "Hola Jennifer! 👋💇‍♀️", "want": "Voldria demanar hora per a:", "none": "Voldria demanar hora.", "tot": "💶 Total aproximat", "pref": "📅 Preferència", "name": "🙋‍♀️ Nom", "q": "Tens disponibilitat? Moltes gràcies! ✨", "asap": ["el primer matí disponible", "la primera tarda disponible", "el primer forat disponible"], "wk": "aquesta setmana", "nx": "la setmana que ve", "on": "el", "pt": [", al matí", ", a la tarda", ", a qualsevol hora"]},k:"Perruqueria · Martorell",lead:"Tall, color i pentinats amb cura. Tria els teus serveis, mira el preu i demana hora en un moment.",c1:"Hora en 1 minut",c2:"Preus clars",
+  svcT:"Tria els teus <em>serveis</em>",whenT:"Proposa la teva <em>hora</em>",infoT:"On <em>som</em>",hoursT:"Horari",contactT:"Contacte",
+  callB:"Trucar",mapB:"Com arribar",foot:"Perruqueria · Martorell, Barcelona",ask:"Consultar",heroB:"Triar serveis",
   from:"des de",svc1:"servei",svcN:"serveis",closed:"Tancat",dn:["Dg","Dl","Dt","Dc","Dj","Dv","Ds"],
   hours:[["Dl","Tancat"],["Dt – Dv","9:30 – 19:30"],["Ds","9:00 – 14:00"],["Dg","Tancat"]],
   cats:{corte:"Tall i pentinat",color:"Color",trat:"Tractaments",even:"Núvies i esdeveniments"}},
- en:{busyN:"Crossed-out times are already taken. Jennifer will confirm your booking on WhatsApp.",wa:["Hi Jennifer! I'd like to book:","Day","Time","flexible","Approx. total","Thank you!"],k:"Hair salon · Martorell",lead:"Cuts, colour and styling with care. Choose your services, see the price and book in a moment.",c1:"Book in 1 minute",c2:"Clear prices",
-  svcT:"Choose your <em>services</em>",whenT:"<em>When</em> suits you?",dayT:"Day",infoT:"Find <em>us</em>",hoursT:"Opening hours",contactT:"Contact",
-  callB:"Call",mapB:"Directions",foot:"Hair salon · Martorell, Barcelona",ask:"Book now",heroB:"Choose services",
+ en:{whenQ:"When suits you?",partQ:"Morning or afternoon?",nameQ:"Your name",namePh:"e.g. Laura",note:"Jennifer will reply on WhatsApp with the first slot that fits and you'll confirm it together.",askB:"Check availability",W:["As soon as possible", "This week", "Next week", "A specific day"],P:["Morning", "Afternoon", "Either"],m:{"hi": "Hi Jennifer! 👋💇‍♀️", "want": "I'd like to book:", "none": "I'd like to book an appointment.", "tot": "💶 Approx. total", "pref": "📅 Preference", "name": "🙋‍♀️ Name", "q": "Do you have availability? Thank you so much! ✨", "asap": ["the first available morning", "the first available afternoon", "the first available slot"], "wk": "this week", "nx": "next week", "on": "on", "pt": [", in the morning", ", in the afternoon", ", any time"]},k:"Hair salon · Martorell",lead:"Cuts, colour and styling with care. Choose your services, see the price and book in a moment.",c1:"Book in 1 minute",c2:"Clear prices",
+  svcT:"Choose your <em>services</em>",whenT:"Suggest a <em>time</em>",infoT:"Find <em>us</em>",hoursT:"Opening hours",contactT:"Contact",
+  callB:"Call",mapB:"Directions",foot:"Hair salon · Martorell, Barcelona",ask:"Ask",heroB:"Choose services",
   from:"from",svc1:"service",svcN:"services",closed:"Closed",dn:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
   hours:[["Mon","Closed"],["Tue – Fri","9:30 – 7:30 pm"],["Sat","9:00 – 2:00 pm"],["Sun","Closed"]],
   cats:{corte:"Cut & styling",color:"Colour",trat:"Treatments",even:"Brides & events"}}
@@ -300,34 +302,7 @@ const S = [
  {c:"even",n:["Peinado de novia","Pentinat de núvia","Bridal styling"],d:["Con prueba previa","Amb prova prèvia","Including a trial"],p:120,t:120,f:1}
 ];
 const ICON = {corte:"#scissors",color:"#brush",trat:"#sparkle",even:"#mirror"};
-const OPEN = {2:["9:30","10:30","11:30","12:30","16:00","17:00","18:00","18:30"],3:0,4:0,5:0,6:["9:00","10:00","11:00","12:00"]};
-let lang = "es", sel = new Set(), cur = "corte", day = null, slot = null;
-/* Horas ocupadas: las tacha Jennifer con su herramienta (horas.json en este repositorio) */
-const HORAS = "https://api.github.com/repos/escaparatedigital/escaparatedigital/contents/clientes/pelu-jennifer/horas.json?ref=main";
-let BUSY = {};
-const dk = (d) => `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-const toMin = (h) => { const [a,b] = h.split(":").map(Number); return a*60 + (b||0); };
-const openDay = (d) => { const w = d.getDay(); return w >= 2 && w <= 6 && BUSY[dk(d)] !== "all"; };
-const selDur = () => Math.max(30, [...sel].reduce((a,i) => a + S[i].t, 0));
-const taken = (h) => { const b = BUSY[dk(new Date(day))]; if (!Array.isArray(b)) return false; const s = toMin(h), e = s + selDur(); return b.some(([x,y]) => s < y && e > x); };
-async function loadBusy(){
-  let j = null;
-  try { const r = await fetch(HORAS + "&t=" + Date.now(), {headers:{Accept:"application/vnd.github.raw+json"}, cache:"no-store"}); if (r.ok) j = await r.json(); } catch (e) {}
-  if (!j) { try { const r = await fetch("horas.json?t=" + Date.now(), {cache:"no-store"}); if (r.ok) j = await r.json(); } catch (e) {} }
-  if (!j || !j.ocupado) return;
-  const B = {};
-  Object.entries(j.ocupado).forEach(([f, v]) => {
-    const r = String(f).match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/); if (!r) return;
-    const k = `${+r[1]}-${+r[2]}-${+r[3]}`;
-    if (v === "cerrado") { B[k] = "all"; return; }
-    if (!Array.isArray(v)) return;
-    const w = new Date(+r[1], +r[2]-1, +r[3]).getDay(), list = (w === 6 ? OPEN[6] : OPEN[2]).map(toMin).sort((a,b) => a-b);
-    B[k] = v.map(toMin).map(s => { const n = list.find(x => x > s); return [s, n && n - s <= 60 ? n : s + 60]; });
-  });
-  BUSY = B;
-  if (day && !openDay(new Date(day))) day = null;
-  render();
-}
+let lang = "es", sel = new Set(), cur = "corte", when = 0, part = 2;
 const $ = (id) => document.getElementById(id), LI = () => ({es:0,ca:1,en:2})[lang];
 const hm = (m) => m >= 60 ? `${Math.floor(m/60)} h${m%60 ? " " + m%60 + " min" : ""}` : `${m} min`;
 
@@ -339,38 +314,22 @@ function render(){
   $("list").innerHTML = Object.keys(t.cats).map(k => `<div class="grp" id="g-${k}"><h3><svg width="${k==="trat"?18:22}" height="${k==="trat"?18:44}" aria-hidden="true"><use href="${ICON[k]}"/></svg>${t.cats[k]}</h3>` +
     S.map((s,i) => s.c !== k ? "" : `<button class="svc" data-i="${i}" aria-pressed="${sel.has(i)}"><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span><b>${s.n[li]}</b><small>${s.d[li]} · ${hm(s.t)}</small></span><span class="pr">${s.f ? `<i>${t.from}</i>` : ""}${s.p} €</span></button>`).join("") + `</div>`).join("");
   $("hours").innerHTML = t.hours.map(([d,h]) => `<li><span>${d}</span><span>${h}</span></li>`).join("");
-  // next 10 days
-  const now = new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Madrid"}));
-  const days = [];
-  for (let k = 0; days.length < 10; k++) { const d = new Date(now); d.setDate(now.getDate() + k); days.push(d); }
-  $("days").innerHTML = days.map(d => { const w = d.getDay(), ok = openDay(d), key = d.toDateString();
-    return `<button class="day" data-k="${key}" ${ok ? "" : "disabled"} aria-pressed="${day===key}"><small>${t.dn[w]}</small><b>${d.getDate()}</b></button>`; }).join("");
-  if (!day) { const f = days.find(openDay); day = f.toDateString(); $("days").querySelector(`[data-k="${day}"]`).setAttribute("aria-pressed","true"); }
-  renderSlots(); renderSum(); observe();
-}
-function renderSlots(){
-  const w = new Date(day).getDay(), list = w === 6 ? OPEN[6] : OPEN[2];
-  const now = new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Madrid"})), isToday = new Date(day).toDateString() === now.toDateString();
-  const past = (h) => { const [a,b] = h.split(":").map(Number); return isToday && a*60+b <= now.getHours()*60+now.getMinutes(); };
-  if (slot && (past(slot) || taken(slot))) slot = null;
-  $("slots").innerHTML = list.map(h => `<button class="slot" data-h="${h}" ${past(h) || taken(h) ? "disabled" : ""} aria-pressed="${slot===h}">${h}</button>`).join("");
+  renderPref();
+  renderSum(); observe();
 }
 function renderSum(){
   const t = T[lang], li = LI(), items = [...sel].map(i => S[i]);
   $("sum").classList.toggle("on", items.length > 0);
   if (!items.length) return;
   const tot = items.reduce((a,s) => a + s.p, 0), dur = items.reduce((a,s) => a + s.t, 0), from = items.some(s => s.f);
-  const d = new Date(day);
   $("sumP").textContent = `${from ? t.from + " " : ""}${tot} €`;
-  $("sumD").textContent = `${items.length} ${items.length > 1 ? t.svcN : t.svc1} · ${hm(dur)} · ${t.dn[d.getDay()]} ${d.getDate()}${slot ? " · " + slot : ""}`;
+  $("sumD").textContent = `${items.length} ${items.length > 1 ? t.svcN : t.svc1} · ${hm(dur)}`;
 }
 const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { cur = en.target.id.slice(2); $("tabs").querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.c === cur)); } }), { rootMargin: "-40% 0px -55% 0px" });
 function observe(){ document.querySelectorAll(".grp").forEach(g => io.observe(g)); }
 document.querySelector(".lang").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; lang = b.dataset.l; document.querySelectorAll(".lang button").forEach(x => x.setAttribute("aria-pressed", x === b)); render(); });
 $("tabs").addEventListener("click", e => { const b = e.target.closest(".tab"); if (!b) return; cur = b.dataset.c; $("g-" + cur).scrollIntoView({behavior:"smooth"}); });
-$("list").addEventListener("click", e => { const b = e.target.closest(".svc"); if (!b) return; const i = +b.dataset.i; sel.has(i) ? sel.delete(i) : sel.add(i); b.setAttribute("aria-pressed", sel.has(i)); renderSlots(); renderSum(); });
-$("days").addEventListener("click", e => { const b = e.target.closest(".day"); if (!b || b.disabled) return; day = b.dataset.k; slot = null; $("days").querySelectorAll(".day").forEach(x => x.setAttribute("aria-pressed", x === b)); renderSlots(); renderSum(); });
-$("slots").addEventListener("click", e => { const b = e.target.closest(".slot"); if (!b || b.disabled) return; slot = b.dataset.h; $("slots").querySelectorAll(".slot").forEach(x => x.setAttribute("aria-pressed", x === b)); renderSum(); });
+$("list").addEventListener("click", e => { const b = e.target.closest(".svc"); if (!b) return; const i = +b.dataset.i; sel.has(i) ? sel.delete(i) : sel.add(i); b.setAttribute("aria-pressed", sel.has(i)); renderSum(); });
 const rio = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); rio.unobserve(en.target); } }), { threshold: .1 });
 document.querySelectorAll(".rv").forEach(el => rio.observe(el));
 
@@ -389,17 +348,38 @@ if(!RM){
   });
 }
 
-$("ask").addEventListener("click", () => {
-  const t = T[lang], li = LI(), items = [...sel].map(i => S[i]); if (!items.length) return;
-  const tot = items.reduce((a,s) => a + s.p, 0), from = items.some(s => s.f), d = new Date(day);
-  const w = t.wa, lines = [w[0], ...items.map(s => "• " + s.n[li]), "",
-    `${w[1]}: ${t.dn[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}`, `${w[2]}: ${slot || w[3]}`,
-    `${w[4]}: ${from ? t.from + " " : ""}${tot} €`, "", w[5]];
+/* Propón tu cita */
+const EMO = {corte:"✂️", color:"🎨", trat:"💆‍♀️", even:"👰"};
+function renderPref(){
+  const t = T[lang];
+  $("when").innerHTML = t.W.map((w,i) => `<button class="opt" data-w="${i}" aria-pressed="${when===i}">${w}</button>`).join("");
+  $("part").innerHTML = t.P.map((w,i) => `<button class="opt" data-p="${i}" aria-pressed="${part===i}">${w}</button>`).join("");
+  $("date").classList.toggle("hide", when !== 3);
+  $("name").placeholder = t.namePh;
+  if (!$("date").min) { const n = new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Madrid"})); $("date").min = `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,"0")}-${String(n.getDate()).padStart(2,"0")}`; }
+}
+$("when").addEventListener("click", e => { const b = e.target.closest(".opt"); if (!b) return; when = +b.dataset.w; renderPref(); if (when === 3) $("date").focus(); });
+$("part").addEventListener("click", e => { const b = e.target.closest(".opt"); if (!b) return; part = +b.dataset.p; renderPref(); });
+function ask(){
+  const t = T[lang], m = t.m, li = LI(), items = [...sel].map(i => S[i]);
+  let pref;
+  if (when === 0) pref = m.asap[part];
+  else if (when === 3 && $("date").value) { const d = new Date($("date").value + "T12:00"); pref = `${m.on} ${t.dn[d.getDay()].toLowerCase()} ${d.getDate()}/${d.getMonth()+1}${m.pt[part]}`; }
+  else pref = (when === 2 ? m.nx : m.wk) + m.pt[part];
+  const lines = [m.hi, "", items.length ? m.want : m.none];
+  if (items.length) {
+    items.forEach(s => lines.push(`${EMO[s.c]} ${s.n[li]}`));
+    const tot = items.reduce((a,s) => a + s.p, 0), from = items.some(s => s.f);
+    lines.push(`${m.tot}: ${from ? t.from + " " : ""}${tot} €`);
+  }
+  lines.push("", `${m.pref}: ${pref}`);
+  const n = $("name").value.trim(); if (n) lines.push(`${m.name}: ${n}`);
+  lines.push("", m.q);
   window.open("https://wa.me/34687393966?text=" + encodeURIComponent(lines.join(String.fromCharCode(10))), "_blank", "noopener");
-});
+}
+$("ask").addEventListener("click", () => { document.querySelector(".book").scrollIntoView({behavior:"smooth", block:"center"}); });
+$("ask2").addEventListener("click", ask);
 render();
-loadBusy(); setInterval(loadBusy, 60000);
-document.addEventListener("visibilitychange", () => { if (!document.hidden) loadBusy(); });
 </script>
 </body>
 </html>
