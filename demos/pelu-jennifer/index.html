@@ -21,14 +21,16 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--cafe);font-family:Jakarta,system-ui,sans-serif;font-weight:500;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+body{background:transparent;color:var(--cafe);font-family:Jakarta,system-ui,sans-serif;font-weight:500;-webkit-font-smoothing:antialiased;overflow-x:hidden;
   -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;padding-bottom:150px}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:2.5px solid var(--rose);outline-offset:3px;border-radius:10px}
 .col{max-width:640px;margin:0 auto;padding:0 22px;position:relative}
 
+.bgm{position:fixed;inset:0;z-index:-1;background:#F3E4E1 url(../../assets/marmol/marmol-rosa-suave.webp) center/cover no-repeat}
+.bgm:after{content:"";position:absolute;inset:0;background:rgba(246,238,234,.62)}
 /* top */
-.top{position:sticky;top:0;z-index:30;background:rgba(246,238,234,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.top{position:sticky;top:0;z-index:30;background:rgba(246,234,231,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .top .col{display:flex;align-items:center;height:60px;gap:12px}
 .logo{font-family:Playfair,serif;font-style:italic;font-weight:600;font-size:24px;white-space:nowrap}
 .logo span{color:var(--rose)}
@@ -38,7 +40,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* hero */
 .hero{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:end;padding:26px 0 30px}
-.arch{position:relative;aspect-ratio:3/4;border-radius:999px 999px 26px 26px;background:var(--blush);overflow:hidden;display:grid;place-items:center}
+.arch{position:relative;aspect-ratio:3/4;border-radius:999px 999px 26px 26px;background:var(--blush) url(../../assets/marmol/marmol-rosa-suave.webp) center/cover;overflow:hidden;display:grid;place-items:center}
 .arch:before{content:"";position:absolute;inset:12px;border-radius:999px 999px 18px 18px;border:1px solid rgba(255,255,255,.65)}
 .arch svg{color:var(--cafe);width:62%;height:auto}
 .hero .k{font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--rose)}
@@ -57,7 +59,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .sample{display:inline-block;margin:-4px 0 14px;font-size:12px;font-weight:700;color:var(--rose);background:var(--blush-l);padding:6px 10px;border-radius:8px}
 
 /* tabs */
-.tabs{position:sticky;top:60px;z-index:20;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:10px 22px;margin:0 -22px;background:rgba(246,238,234,.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.tabs{position:sticky;top:60px;z-index:20;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:10px 22px;margin:0 -22px;background:rgba(246,234,231,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .tabs::-webkit-scrollbar{display:none}
 .tab{flex:none;min-height:42px;padding:0 16px;border-radius:999px;font-weight:800;font-size:13.5px;background:var(--paper);border:1px solid var(--line);transition:background-color .2s ease,color .2s ease,transform .16s var(--ease)}
 .tab[aria-selected="true"]{background:var(--cafe);color:var(--paper);border-color:var(--cafe)}
@@ -143,6 +145,7 @@ footer .logo{font-size:30px;color:var(--cafe)}
 </style>
 </head>
 <body>
+<div class="bgm" aria-hidden="true"></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="scissors" viewBox="0 0 60 120"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="16" cy="98" r="11"/><circle cx="44" cy="98" r="11"/><path d="M22 88 40 6M38 88 20 6"/><circle cx="30" cy="50" r="1.8"/></g></symbol>
   <symbol id="comb" viewBox="0 0 40 120"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="20" y="4" width="10" height="112" rx="4"/><path d="M20 12H8M20 20H8M20 28H8M20 36H8M20 44H8M20 52H8M20 60H8M20 68H8M20 76H8M20 84H8"/></g></symbol>
