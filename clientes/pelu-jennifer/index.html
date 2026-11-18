@@ -302,8 +302,8 @@ const S = [
 const ICON = {corte:"#scissors",color:"#brush",trat:"#sparkle",even:"#mirror"};
 const OPEN = {2:["9:30","10:30","11:30","12:30","16:00","17:00","18:00","18:30"],3:0,4:0,5:0,6:["9:00","10:00","11:00","12:00"]};
 let lang = "es", sel = new Set(), cur = "corte", day = null, slot = null;
-/* Horas ocupadas: hoja de Google publicada como CSV (columnas Fecha, Hora, Duración) */
-const SHEET = "";
+/* Horas ocupadas: agenda de Jennifer (Apps Script), solo fecha, hora y duración */
+const API = "";
 let BUSY = {};
 const dk = (d) => `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
 const toMin = (h) => { const [a,b] = h.split(":").map(Number); return a*60 + (b||0); };
@@ -311,20 +311,16 @@ const openDay = (d) => { const w = d.getDay(); return w >= 2 && w <= 6 && BUSY[d
 const selDur = () => Math.max(30, [...sel].reduce((a,i) => a + S[i].t, 0));
 const taken = (h) => { const b = BUSY[dk(new Date(day))]; if (!Array.isArray(b)) return false; const s = toMin(h), e = s + selDur(); return b.some(([x,y]) => s < y && e > x); };
 async function loadBusy(){
-  if (!SHEET) return;
+  if (!API) return;
   try {
-    const tx = await (await fetch(SHEET + (SHEET.includes("?") ? "&" : "?") + "t=" + Date.now(), {cache:"no-store"})).text();
+    const list = await (await fetch(API + "?action=busy&t=" + Date.now())).json();
     const B = {};
-    tx.split(/\r?\n/).slice(1).forEach(l => {
-      const c = l.split(",").map(s => s.replace(/^"|"$/g, "").trim()); if (!c[0]) return;
-      let y, m, d, r = c[0].match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
-      if (r) { d = +r[1]; m = +r[2]; y = +r[3]; if (y < 100) y += 2000; }
-      else { r = c[0].match(/^(\d{4})-(\d{1,2})-(\d{1,2})/); if (!r) return; y = +r[1]; m = +r[2]; d = +r[3]; }
-      const k = `${y}-${m}-${d}`;
-      if (!/^\d{1,2}[:.]\d{2}/.test(c[1] || "")) { B[k] = "all"; return; }
+    list.forEach(({f, h, d}) => {
+      const r = String(f).match(/^(\d{4})-(\d{1,2})-(\d{1,2})/); if (!r) return;
+      const k = `${+r[1]}-${+r[2]}-${+r[3]}`;
+      if (!/^\d{1,2}:\d{2}/.test(h || "")) { B[k] = "all"; return; }
       if (B[k] === "all") return;
-      const s = toMin(c[1].replace(".", ":")), du = parseInt(c[2]) || 30;
-      (B[k] = B[k] || []).push([s, s + du]);
+      const s = toMin(h); (B[k] = B[k] || []).push([s, s + (+d || 30)]);
     });
     BUSY = B;
     if (day && !openDay(new Date(day))) day = null;
@@ -401,7 +397,7 @@ $("ask").addEventListener("click", () => {
   window.open("https://wa.me/34687393966?text=" + encodeURIComponent(lines.join(String.fromCharCode(10))), "_blank", "noopener");
 });
 render();
-loadBusy(); setInterval(loadBusy, 120000);
+loadBusy(); setInterval(loadBusy, 60000);
 document.addEventListener("visibilitychange", () => { if (!document.hidden) loadBusy(); });
 </script>
 </body>
