@@ -1,0 +1,33 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "page",
+  "shape": "kept sequence, recomposed",
+  "theme": "sticker",
+  "axes": "light/display-heavy/chromatic-magenta",
+  "hero": "Stage",
+  "nav": "edge-aligned",
+  "footer": "mast",
+  "imagery": "the product, 2 screenshots + built preview",
+  "photos": [],
+  "entry": "none",
+  "fingerprint": "sticker-stage-bento-rows-statement-faq",
+  "sections": [
+   "hero",
+   "configurator",
+   "bento",
+   "cases",
+   "rows",
+   "statement",
+   "faq",
+   "mast"
+  ],
+  "signature": "menu screenshot as a die-cut sticker",
+  "waived": [
+   "49b"
+  ],
+  "prompt": "estudio de diseño digital para pequeños negocios",
+  "date": "2026-11-19"
+ }
+]

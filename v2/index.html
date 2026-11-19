@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Escaparate Digital, tu negocio bonito y en el móvil</title>
+<meta name="description" content="Cartas digitales con QR, catálogos, reservas por WhatsApp y diseño para redes para bares, peluquerías, tiendas y cafeterías. Diseña tu escaparate y pide tu demo gratis.">
+<meta name="theme-color" content="#F3EEE4">
+<meta property="og:title" content="El Escaparate Digital">
+<meta property="og:description" content="Tu negocio, bonito y en el móvil. Diseña tu escaparate y pide tu demo gratis.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='16' fill='%23D6156A'/%3E%3Cpath d='M20 18h24v6H28v5h14v6H28v5h16v6H20z' fill='%23FDFCFA'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Sofia+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="nav">
+  <div class="container">
+    <a class="wordmark" href="#top" aria-label="El Escaparate Digital, inicio">El Escaparate Digital</a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#disena">Diseña tu escaparate</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#ejemplos">Ejemplos</a>
+      <a href="#faq">Preguntas</a>
+    </nav>
+    <a class="btn btn--small" href="https://ig.me/m/el.escaparate.digital" target="_blank" rel="noopener">Pide tu demo</a>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top" aria-labelledby="hero-t">
+  <div class="container">
+    <div class="hero__text">
+      <h1 id="hero-t">Tu negocio, bonito y en el móvil</h1>
+      <p class="lead">Cartas con QR, catálogos, reservas por WhatsApp y diseño para tus redes.</p>
+      <div class="actions">
+        <a class="btn btn--primary" href="https://ig.me/m/el.escaparate.digital" target="_blank" rel="noopener">Pide tu demo gratis</a>
+        <a class="btn" href="#disena">Diseña tu escaparate</a>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <figure class="sticker" data-slot="hero" data-kind="product" data-alt="Captura de una carta digital real en el móvil">
+        <img src="../assets/demos/carta-restaurante.webp" width="600" height="1230" alt="Carta digital de un restaurante de ejemplo en el móvil" fetchpriority="high">
+      </figure>
+      <p class="tag tag--lime">Carta con QR</p>
+      <p class="tag tag--pink">Sin apps ni comisiones</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="disena" aria-labelledby="cf-t">
+  <div class="container">
+    <div class="head head--split">
+      <h2 id="cf-t">Diseña tu escaparate en 3 pasos</h2>
+      <p class="lead">Elige tu negocio, tu estilo y lo que necesitas. Mira cómo quedaría en el móvil y pídenos tu demo gratis.</p>
+    </div>
+    <div class="cfg">
+      <div>
+        <ol class="cfg__steps">
+          <li class="step">
+            <h3>Elige tu negocio</h3>
+            <p class="step__hint">Adaptamos los textos y las secciones a tu sector.</p>
+            <div class="opts" role="radiogroup" aria-label="Tipo de negocio" id="o-biz">
+              <button type="button" class="opt" role="radio" aria-checked="true" data-v="bar">Bar o restaurante</button>
+              <button type="button" class="opt" role="radio" aria-checked="false" data-v="pelu">Peluquería o estética</button>
+              <button type="button" class="opt" role="radio" aria-checked="false" data-v="tienda">Tienda</button>
+              <button type="button" class="opt" role="radio" aria-checked="false" data-v="cafe">Cafetería u obrador</button>
+            </div>
+          </li>
+          <li class="step">
+            <h3>Elige tu estilo</h3>
+            <p class="step__hint">Colores y letras pensados para tu clientela.</p>
+            <div class="opts" role="radiogroup" aria-label="Estilo" id="o-sty">
+              <button type="button" class="opt" role="radio" aria-checked="true" data-v="coquette"><span class="sw sw--coquette" aria-hidden="true"><i></i><i></i></span>Coquette</button>
+              <button type="button" class="opt" role="radio" aria-checked="false" data-v="natural"><span class="sw sw--natural" aria-hidden="true"><i></i><i></i></span>Natural</button>
+              <button type="button" class="opt" role="radio" aria-checked="false" data-v="soleado"><span class="sw sw--soleado" aria-hidden="true"><i></i><i></i></span>Soleado</button>
+              <button type="button" class="opt" role="radio" aria-checked="false" data-v="cielo"><span class="sw sw--cielo" aria-hidden="true"><i></i><i></i></span>Cielo</button>
+            </div>
+          </li>
+          <li class="step">
+            <h3>¿Qué necesitas?</h3>
+            <p class="step__hint">Marca todo lo que te interese.</p>
+            <div class="opts" id="o-feat">
+              <button type="button" class="opt" aria-pressed="true" data-v="qr"><span class="tick" aria-hidden="true"></span>Carta o catálogo con QR</button>
+              <button type="button" class="opt" aria-pressed="false" data-v="res"><span class="tick" aria-hidden="true"></span>Reservas o pedidos por WhatsApp</button>
+              <button type="button" class="opt" aria-pressed="false" data-v="red"><span class="tick" aria-hidden="true"></span>Diseño para redes</button>
+            </div>
+          </li>
+        </ol>
+        <div class="summary" aria-live="polite">
+          <span class="summary__label">Tu escaparate</span>
+          <p class="summary__text" id="sum">Bar o restaurante, estilo Coquette, carta con QR</p>
+          <div class="summary__row">
+            <a class="btn btn--primary" id="go" href="https://ig.me/m/el.escaparate.digital" target="_blank" rel="noopener">Copiar y pedir presupuesto</a>
+            <span class="toast" id="toast" role="status">Copiado. Pégalo en el mensaje.</span>
+          </div>
+          <small>Copiamos tu selección y abrimos nuestro Instagram. Solo tienes que pegarla en el mensaje.</small>
+        </div>
+      </div>
+      <div class="prev">
+        <span class="prev__label">Vista previa de ejemplo</span>
+        <div class="pv" role="img" aria-label="Vista previa de tu escaparate en el móvil" id="pv">
+          <div class="pv__s" id="pvs">
+            <div class="pv__top"><div class="pv__nm" id="pv-nm"></div><div class="pv__sb" id="pv-sb"></div><div class="pv__qr" id="pv-qr">Escanea el QR de tu mesa</div></div>
+            <div class="pv__sec" id="pv-sec"></div>
+            <ul class="pv__list" id="pv-list"></ul>
+            <div class="pv__soc" id="pv-soc"><div class="pv__soc-t">Síguenos en Instagram</div><div class="pv__soc-g"><i></i><i></i><i></i></div></div>
+            <div class="pv__bar" id="pv-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section--s" id="servicios" aria-labelledby="sv-t">
+  <div class="container">
+    <div class="head">
+      <h2 id="sv-t">Todo lo que tu negocio necesita</h2>
+    </div>
+    <div class="bento">
+      <article class="fill fill--pink"><div><h3>Cartas digitales con QR</h3><p>Tu carta en el móvil de tus clientes, siempre al día.</p></div><ul><li>Fotos y alérgenos</li><li>Menú del día</li><li>Español e inglés</li></ul></article>
+      <article class="fill fill--lime"><div><h3>Catálogos para tiendas</h3><p>Tu escaparate abierto a todas horas.</p></div><ul><li>Productos con foto</li><li>Pedidos por WhatsApp</li><li>Novedades y ofertas</li></ul></article>
+      <article class="fill fill--ink"><div><h3>Reservas por WhatsApp</h3><p>Citas sin llamadas ni libretas.</p></div><ul><li>Precio y duración</li><li>Mensaje ya escrito</li><li>Sin comisiones</li></ul></article>
+      <article class="fill fill--white"><div><h3>Diseño para redes</h3><p>Tu marca bonita también en Instagram.</p></div><ul><li>Publicaciones</li><li>Reels con portada</li><li>Plantillas a tu estilo</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<section class="section--l" id="ejemplos" aria-labelledby="ex-t">
+  <div class="container">
+    <div class="head head--split">
+      <h2 id="ex-t">Así se ve en el móvil</h2>
+      <p class="lead">Dos demos hechas con negocios ficticios para que te hagas una idea.</p>
+    </div>
+    <div class="cases">
+      <article class="case">
+        <div class="case__fig">
+          <figure class="sticker" data-slot="demo-1" data-kind="product" data-alt="Captura de la carta digital de un restaurante">
+            <img src="../assets/demos/carta-restaurante.webp" width="600" height="1230" alt="Carta digital de un restaurante de ejemplo" loading="lazy">
+          </figure>
+          <p class="tag tag--lime case__tag">Restaurante</p>
+        </div>
+        <div><h3>Carta digital con QR</h3><p>Menú del día destacado, filtros de alérgenos y dos idiomas. Cambias un precio y se actualiza al momento.</p></div>
+      </article>
+      <article class="case">
+        <div class="case__fig">
+          <figure class="sticker" data-slot="demo-2" data-kind="product" data-alt="Captura de la página de reservas de una peluquería">
+            <img src="../assets/demos/reservas-peluqueria.webp" width="600" height="1230" alt="Página de reservas de una peluquería de ejemplo" loading="lazy">
+          </figure>
+          <p class="tag tag--pink case__tag">Peluquería</p>
+        </div>
+        <div><h3>Reservas por WhatsApp</h3><p>Tus clientes eligen servicios, ven el total y te piden cita con el mensaje ya escrito.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="hw-t">
+  <div class="container how">
+    <div class="head"><h2 id="hw-t">Fácil, rápido y sin líos</h2></div>
+    <ol class="rows">
+      <li><h3>Nos escribes</h3><p>Por mensaje en Instagram. Mándanos tu carta, tus servicios o tus productos: vale una foto.</p></li>
+      <li><h3>Ves tu demo</h3><p>Te preparamos una demo gratis con tu negocio para que la veas en tu móvil.</p></li>
+      <li><h3>La publicamos</h3><p>Te damos tu enlace y tu QR listo para imprimir. Si cambias algo, lo actualizamos.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="promise section--s on-ink" aria-labelledby="pr-t">
+  <div class="container">
+    <p class="tag tag--lime">Demo gratis</p>
+    <div class="promise__body">
+      <h2 id="pr-t">Solo sigues adelante si te enamora</h2>
+      <p>Te preparamos una demo con tu propio negocio sin compromiso. Si no te convence, no pagas nada.</p>
+      <a class="btn btn--primary" href="https://ig.me/m/el.escaparate.digital" target="_blank" rel="noopener">Quiero mi demo</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq" aria-labelledby="fq-t">
+  <div class="container faq">
+    <div class="head">
+      <h2 id="fq-t">Resolvemos tus dudas</h2>
+      <p>¿Tienes otra pregunta? Escríbenos por Instagram y te respondemos.</p>
+    </div>
+    <div class="faq__list">
+      <details><summary>¿Mis clientes tienen que descargar una app?</summary><p>No. Escanean el QR o abren tu enlace y lo ven al momento en el navegador del móvil.</p></details>
+      <details><summary>¿Puedo cambiar precios o productos después?</summary><p>Sí. Nos mandas los cambios por mensaje y los actualizamos.</p></details>
+      <details><summary>¿Cómo funcionan las reservas por WhatsApp?</summary><p>Tu cliente elige los servicios y al pulsar «Pedir cita» se abre WhatsApp con el mensaje ya escrito para ti. Sin apps de reservas ni comisiones.</p></details>
+      <details><summary>¿Cuánto cuesta?</summary><p>Depende de lo que necesites. Usa el configurador de arriba y te enviamos un presupuesto a medida, sin compromiso.</p></details>
+      <details><summary>¿La demo es gratis de verdad?</summary><p>Sí. Te preparamos una demo con tu propio negocio y solo sigues adelante si te gusta.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="mast" aria-labelledby="fn-t">
+  <div class="container">
+    <div class="mast__close">
+      <div>
+        <h2 id="fn-t">¿Quieres el tuyo?</h2>
+        <p class="lead">Escríbenos por Instagram y te preparamos una demo gratis con tu negocio.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn--primary" href="https://ig.me/m/el.escaparate.digital" target="_blank" rel="noopener">Escríbenos por Instagram</a>
+        <a class="btn" href="https://instagram.com/el.escaparate.digital" target="_blank" rel="noopener">@el.escaparate.digital</a>
+      </div>
+    </div>
+    <a class="mast__word" href="#top">El Escaparate Digital</a>
+    <div class="mast__legal"><span>© <span id="y"></span> El Escaparate Digital</span><span>Los negocios de los ejemplos y la vista previa son ficticios.</span></div>
+  </div>
+</footer>
+
+<script>
+document.getElementById("y").textContent = new Date().getFullYear();
+const BIZ = {
+  bar:{nm:"Bar La Plaza",sb:"Tapas y raciones",label:"Bar o restaurante",sec:"Nuestra carta",qr:"Escanea el QR de tu mesa",bar:"Reservar mesa por WhatsApp",feat:"carta con QR",
+    items:[["Croquetas caseras","8,50 €"],["Tortilla de patatas","7,00 €"],["Pulpo a la brasa","16,00 €"],["Tarta de queso","5,50 €"]]},
+  pelu:{nm:"Salón Aurora",sb:"Peluquería y estética",label:"Peluquería o estética",sec:"Servicios",qr:"Escanea y reserva",bar:"Pedir cita por WhatsApp",feat:"página de servicios con QR",
+    items:[["Corte y peinado","32 €"],["Color raíz","desde 42 €"],["Manicura","18 €"],["Tratamiento hidratante","25 €"]]},
+  tienda:{nm:"Tienda Nube",sb:"Regalos y decoración",label:"Tienda",sec:"Catálogo",qr:"Escanea el escaparate",bar:"Pedir por WhatsApp",feat:"catálogo con QR",
+    items:[["Vela aromática","14 €"],["Taza de cerámica","12 €"],["Lámina ilustrada","9 €"],["Bolsa de tela","15 €"]]},
+  cafe:{nm:"Café Miga",sb:"Cafetería y obrador",label:"Cafetería u obrador",sec:"Para hoy",qr:"Escanea y pide",bar:"Encargar por WhatsApp",feat:"carta con QR",
+    items:[["Café con leche","1,80 €"],["Cruasán de mantequilla","2,20 €"],["Tostada con tomate","3,00 €"],["Tarta del día","4,50 €"]]}
+};
+const STY = {
+  coquette:{label:"Coquette"}, natural:{label:"Natural"}, soleado:{label:"Soleado"}, cielo:{label:"Cielo"}
+};
+const tok = (sty, k) => `var(--sty-${sty}-${k})`;
+const state = { biz:"bar", sty:"coquette", feat:new Set(["qr"]) };
+const $ = (id) => document.getElementById(id);
+function render(){
+  const b = BIZ[state.biz], s = STY[state.sty], ac = tok(state.sty, "ac");
+  $("pvs").style.backgroundColor = tok(state.sty, "bg");
+  $("pv-nm").textContent = b.nm; $("pv-nm").style.color = ac;
+  $("pv-sb").textContent = b.sb;
+  $("pv-sec").textContent = b.sec; $("pv-sec").style.color = ac;
+  $("pv-qr").textContent = b.qr; $("pv-qr").style.display = state.feat.has("qr") ? "inline-flex" : "none";
+  $("pv-list").innerHTML = b.items.map(([n,p]) => `<li><span>${n}</span><b style="color:${ac}">${p}</b></li>`).join("");
+  $("pv-soc").classList.toggle("on", state.feat.has("red"));
+  [...$("pv-soc").querySelectorAll("i")].forEach((t,i) => t.style.background = tok(state.sty, "t" + (i + 1)));
+  const bar = $("pv-bar"); bar.textContent = b.bar; bar.style.background = ac; bar.classList.toggle("on", state.feat.has("res"));
+  const f = [];
+  if (state.feat.has("qr")) f.push(b.feat);
+  if (state.feat.has("res")) f.push(state.biz === "pelu" ? "reservas por WhatsApp" : "pedidos y reservas por WhatsApp");
+  if (state.feat.has("red")) f.push("diseño para redes");
+  $("sum").textContent = `${b.label}, estilo ${s.label}, ${f.length ? f.join(", ") : "elige qué necesitas"}`;
+}
+function radio(groupId, key){
+  const g = $(groupId);
+  g.addEventListener("click", e => {
+    const o = e.target.closest(".opt"); if (!o) return;
+    g.querySelectorAll(".opt").forEach(x => x.setAttribute("aria-checked", x === o ? "true" : "false"));
+    state[key] = o.dataset.v; render();
+  });
+}
+radio("o-biz","biz"); radio("o-sty","sty");
+$("o-feat").addEventListener("click", e => {
+  const o = e.target.closest(".opt"); if (!o) return;
+  const on = o.getAttribute("aria-pressed") !== "true";
+  o.setAttribute("aria-pressed", on ? "true" : "false");
+  on ? state.feat.add(o.dataset.v) : state.feat.delete(o.dataset.v); render();
+});
+$("go").addEventListener("click", () => {
+  const msg = `Hola 👋 Quiero mi demo gratis. Mi escaparate: ${$("sum").textContent}.`;
+  try { navigator.clipboard.writeText(msg).then(() => { $("toast").classList.add("on"); setTimeout(() => $("toast").classList.remove("on"), 4000); }).catch(() => {}); } catch (e) {}
+});
+render();
+</script>
+<script>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
+document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+</body>
+</html>
